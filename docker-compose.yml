@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - PGPORT=${DATABASE_PORT}
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
