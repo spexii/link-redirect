@@ -16,6 +16,9 @@ const client = new pg.Client({
 
 client.connect();
 
+// Support also local favicon files
+app.use(express.static('public'));
+
 app.get('/:linkName', async (req, res) => {
     const { linkName } = req.params;
 
@@ -30,8 +33,21 @@ app.get('/:linkName', async (req, res) => {
             if (link.redirect) {
                 res.redirect(link.redirect);
             } else {
-                // Otherwise, return a simple text response
-                res.send(`Hello, ${linkName}`);
+                // Otherwise, return a simple HTML page
+                res.send(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        ${link.favicon && `<link rel="icon" href="${link.favicon}" type="image/x-icon">`}
+                        <title>Hello, ${linkName}</title>
+                    </head>
+                    <body>
+                        <h1>Hello, ${linkName}</h1>
+                    </body>
+                    </html>
+                `);
             }
         } else {
             // If no row is found, return a 404 Not Found
