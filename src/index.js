@@ -40,7 +40,7 @@ app.get('/:linkName', async (req, res) => {
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        ${link.favicon && `<link rel="icon" href="${link.favicon}" type="image/x-icon">`}
+                        <link rel="icon" href="${link.favicon || ''}" type="image/x-icon">
                         <title>Hello, ${linkName}</title>
                     </head>
                     <body>

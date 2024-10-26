@@ -7,7 +7,7 @@ services:
       - POSTGRES_DB=${DATABASE_NAME}
       - PGPORT=${DATABASE_PORT}
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
   web:
     build: .
     depends_on:
